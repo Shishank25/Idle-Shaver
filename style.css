@@ -8,29 +8,22 @@ html, body {
     height: 100%; /* Ensures the body fills the viewport */
     margin: 0; /* Removes default margin */
 }
+#main{
+    display: flex;
+    position: relative;
+}
 img{
     background-color: transparent;
 }
-.eyes{
-    scale: 0.4;
-    background-color: transparent;
-    z-index: 2;
-    position: absolute;
-}
-#eye1{
-    transform: translate(1280px,-30px);
-}
-#eye2{
-    transform: translate(1850px,-30px);
-}
 .movers{
     background-color: transparent;
+    opacity: 0.5;
     position: absolute;
     height: 200px;
     width: 300px;
 }
 #move1{
-    transform: translate(400px,0px);
+    left: 27%;
     z-index: 20;
 }
 #move1:hover + #eb1{
@@ -42,13 +35,30 @@ img{
     z-index: 20;   
 }
 #move2:hover + #eb2{
-    transform: translate(0px,-120px);
+    transform: translate(350px,-120px);
     transition: transform 0.1 0.15s ease-in-out;
+}
+#noseimg{
+    transform: translate(-10px,-20px);
+    height: 70px;
 }
 #info{
     position: absolute;
     top: 50px;
     font-size: small;
+}
+.eyes{
+    scale: 0.4;
+    background-color: transparent;
+    z-index: 2;
+    position: absolute;
+}
+#eye1{
+    transform: translate(85vw, 1vh);
+}
+#eye2{
+    position: absolute;
+    transform: translate(118vw,1vh);
 }
 .eb{
     background-color: #0000;
@@ -57,32 +67,41 @@ img{
     z-index: 10;
     background-color: #0000;
     position: absolute;
-    top: 40px;
-    left: 470px;
+    top: 50px;
+    left: 30%;
+    transition: transform 0.25s ease-in-out;
+}
+.ebs2{
+    z-index: 10; 
+    background-color: #0000;
+    position: relative;
     transition: transform 0.25s ease-in-out;
 }
 #eb2{
-    left: 750px;
+    left: 27%;
+    transform: translate(350px,50px);
 }
 #face{
     position: absolute;
-    left: 30%;
+    left: 30vw;
     top: -0px;
     height: 550px;
     width: 500px;
     border-radius: 50%;
-    background-color: #FFC080;
+    /* background-color: #FFC080; */
     transform: scale(1.5);
+    background-color: #edaf8a;
 }
 
 #nose{
+    scale: 1.4;
     position: absolute;
     top: 180px;
     left: 49%;
     height: 50px;
     width: 20px;
-    background-color: #f9a756;
-    border: 1px solid #000;
+    background-color: transparent;
+    border: 1px solid transparent;
     border-top: 0px;
 }
 
