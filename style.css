@@ -19,11 +19,12 @@ img{
     background-color: transparent;
     opacity: 0.5;
     position: absolute;
-    height: 200px;
-    width: 300px;
+    height: 165px;
+    width: 320px;
 }
 #move1{
-    left: 27%;
+    top: 25%;
+    left: 7%;
     z-index: 20;
 }
 #move1:hover + #eb1{
@@ -31,11 +32,13 @@ img{
     transition: transform 0.15s ease-out;
 }
 #move2{
-    transform: translate(720px,0px);
+    top: 25%;
+    left: 16%;
+    transform: translate(265px,0px);
     z-index: 20;   
 }
 #move2:hover + #eb2{
-    transform: translate(350px,-120px);
+    transform: translate(100px,-120px);
     transition: transform 0.1 0.15s ease-in-out;
 }
 #noseimg{
@@ -48,55 +51,55 @@ img{
     font-size: small;
 }
 .eyes{
-    scale: 0.4;
+    top: 15%;
+    scale: 0.35;
     background-color: transparent;
     z-index: 2;
     position: absolute;
 }
 #eye1{
-    transform: translate(85vw, 1vh);
+    left: 11.5%;
+    position: absolute;
+    transform: translate(300px, 175px);
 }
 #eye2{
+    left: 15%;
     position: absolute;
-    transform: translate(118vw,1vh);
+    transform: translate(780px,175px);
 }
 .eb{
-    background-color: #0000;
+    background-color: transparent;
 }
 .ebs{
-    z-index: 10;
+    scale: 1.2;
+    z-index: 4;
     background-color: #0000;
     position: absolute;
-    top: 50px;
-    left: 30%;
+    top: 27%;
+    left: 13%;
     transition: transform 0.25s ease-in-out;
 }
-.ebs2{
-    z-index: 10; 
-    background-color: #0000;
-    position: relative;
-    transition: transform 0.25s ease-in-out;
-}
+
 #eb2{
-    left: 27%;
-    transform: translate(350px,50px);
+    left: 40%;
+    transform: translate(100px,0px);
 }
 #face{
     position: absolute;
-    left: 30vw;
-    top: -0px;
-    height: 550px;
-    width: 500px;
+    left: 25vw;
+    top: -190px;
+    height: 825px;
+    width: 750px;
     border-radius: 50%;
     /* background-color: #FFC080; */
-    transform: scale(1.5);
+    /* transform: scale(1.5); */
     background-color: #edaf8a;
 }
 
 #nose{
-    scale: 1.4;
+    scale: 2;
     position: absolute;
-    top: 180px;
+    top: 40%;
     left: 49%;
     height: 50px;
     width: 20px;
@@ -107,19 +110,20 @@ img{
 
 #lips{
     position: absolute;
+    scale: 2;
     left: 48%;
-    top: 400px;
+    top: 70%;
     height: 1px;
     width: 50px;
     background-color: rgb(231, 90, 90);
-    z-index: 10;
+    z-index: 4;
 }
 
 #beard{
     position: absolute;
-    top: 250px;
-    height: 280px;
-    width: 500px;
+    top: 400px;
+    height: 400px;
+    width: 750px;
     background-color: #c7baad;
     border: 0px solid #000;
     border-bottom-left-radius: 500px;
