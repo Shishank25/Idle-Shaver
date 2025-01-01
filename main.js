@@ -1,153 +1,137 @@
-*{
-    background-color: aquamarine;
-    cursor: url('Assets/dot2.png'), pointer;
+const face = document.getElementById("face");
+let hairCount = 0;
+const hairs = []; // Array to store the positions of all hairs
+const trimmer = document.getElementById("trimmer");
+const score = document.getElementById('score');
+let currentScore = 0;
+const audio = document.getElementById('myAudio');
+audio.loop = true; // Enable looping
+audio.volume = 0.5;
+const info = document.getElementById('info');
+const eb1 = document.getElementById('eb1');
+const eb2 = document.getElementById('eb2');
+
+
+let isGrowing = false; // Flag to prevent multiple growHair calls
+
+// Create and grow hair
+function growHair() {
+  if (hairCount >= 100 || isGrowing) {
+    return; 
+  }
+  isGrowing = true; // Prevent further hair growth until the current growHair finishes
+
+  let validPosition = false;
+  let x, y;
+
+  // Loop until a valid position is found
+  while (!validPosition) {
+    const angle = Math.random() * Math.PI; // Random angle
+    const radius = Math.random() * 370; // Random radius within the circle
+    x = 370 + radius * Math.cos(angle); // Convert polar to cartesian
+    y = 400 + radius * Math.sin(angle);
+
+    // Check distance from all existing hairs
+    validPosition = hairs.every(({ position }) => {
+      const [hx, hy] = position;
+      const distance = Math.sqrt((x - hx) ** 2 + (y - hy) ** 2);
+      return distance >= 20; // Ensure at least 20px distance
+    });
+  }
+
+  // Create hair and position it
+  const hair = document.createElement("div");
+  hair.style.position = "absolute";
+  hair.style.width = "1px";
+  hair.style.height = "2px";
+  hair.style.backgroundColor = "black";
+  hair.style.borderRadius = "3px";
+  hair.style.left = `${x}px`;
+  hair.style.top = `${y}px`;
+  hair.style.transform = 'scaleY(1)';
+  hair.style.transition = 'transform 1s ease-in-out';
+
+  // Add hair to the face and store its position
+  face.appendChild(hair);
+  hairs.push({ element: hair, position: [x, y] });
+  hairCount++;
+
+  setTimeout(() => {
+    hair.style.transform = 'scaleY(3)';
+    isGrowing = false; // Allow the next growHair call after this finishes
+  }, 50);
+  score.innerText = `${currentScore}`;
 }
 
-html, body {
-    overflow: hidden; /* Disables scrolling */
-    height: 100%; /* Ensures the body fills the viewport */
-    margin: 0; /* Removes default margin */
-}
-#main{
-    display: flex;
-    position: relative;
-}
-img{
-    background-color: transparent;
-}
-.movers{
-    background-color: transparent;
-    opacity: 0.5;
-    position: absolute;
-    height: 165px;
-    width: 320px;
-}
-#move1{
-    top: 25%;
-    left: 7%;
-    z-index: 20;
-}
-#move1:hover + #eb1{
-    transform: translate(0px,-120px);
-    transition: transform 0.15s ease-out;
-}
-#move2{
-    top: 25%;
-    left: 16%;
-    transform: translate(265px,0px);
-    z-index: 20;   
-}
-#move2:hover + #eb2{
-    transform: translate(100px,-120px);
-    transition: transform 0.1 0.15s ease-in-out;
-}
-#noseimg{
-    transform: translate(-10px,-20px);
-    height: 70px;
-}
-#info{
-    position: absolute;
-    top: 50px;
-    font-size: small;
-}
-.eyes{
-    top: 15%;
-    scale: 0.35;
-    background-color: transparent;
-    z-index: 2;
-    position: absolute;
-}
-#eye1{
-    left: 11.5%;
-    position: absolute;
-    transform: translate(300px, 175px);
-}
-#eye2{
-    left: 15%;
-    position: absolute;
-    transform: translate(780px,175px);
-}
-.eb{
-    background-color: transparent;
-}
-.ebs{
-    scale: 1.2;
-    z-index: 4;
-    background-color: #0000;
-    position: absolute;
-    top: 27%;
-    left: 13%;
-    transition: transform 0.25s ease-in-out;
+// Start growing hair every second using requestAnimationFrame for smoother updates
+function startGrowingHair() {
+  function loop() {
+    growHair();
+    requestAnimationFrame(loop); // Keep calling growHair at optimal intervals
+  }
+  loop();
 }
 
-#eb2{
-    left: 40%;
-    transform: translate(100px,0px);
-}
-#face{
-    position: absolute;
-    left: 25vw;
-    top: -190px;
-    height: 825px;
-    width: 750px;
-    border-radius: 50%;
-    /* background-color: #FFC080; */
-    /* transform: scale(1.5); */
-    background-color: #edaf8a;
+// Start hair growth loop
+startGrowingHair();
+
+function ebmove(){
+
 }
 
-#nose{
-    scale: 2;
-    position: absolute;
-    top: 40%;
-    left: 49%;
-    height: 50px;
-    width: 20px;
-    background-color: transparent;
-    border: 1px solid transparent;
-    border-top: 0px;
+document.addEventListener('mousemove', (event) => {
+  trimmer.style.left = `${event.clientX - 35}px`;
+  trimmer.style.top = `${event.clientY}px`;
+
+  detectCollisions();
+});
+
+document.addEventListener('click', () => {
+
+  
+        
+    if(audio.paused){
+        audio.play().catch((error) => console.error('Playback error:', error));}
+    else{ audio.pause()}
+    info.remove();
+  });
+  
+
+// Function to check for collision between trimmer and hair
+function checkCollision(trimmer, hair) {
+  const trimmerRect = trimmer.getBoundingClientRect();
+  const hairRect = hair.getBoundingClientRect();
+
+  // Check if the bounding boxes of trimmer and hair overlap
+  return !(hairRect.right < trimmerRect.left || 
+           hairRect.left > trimmerRect.right || 
+           hairRect.bottom < trimmerRect.top || 
+           hairRect.top > trimmerRect.bottom);
 }
 
-#lips{
-    position: absolute;
-    scale: 2;
-    left: 48%;
-    top: 70%;
-    height: 1px;
-    width: 50px;
-    background-color: rgb(231, 90, 90);
-    z-index: 4;
-}
+// Function to handle hair collision detection
+async function detectCollisions() {
 
-#beard{
-    position: absolute;
-    top: 400px;
-    height: 400px;
-    width: 750px;
-    background-color: #c7baad;
-    border: 0px solid #000;
-    border-bottom-left-radius: 500px;
-    border-bottom-right-radius: 500px;
-    opacity: 0.7;
-}
+  // Loop through all hairs and check for collision
+  hairs.forEach(({ element, position }, index) => {
+    if (checkCollision(trimmer, element)) {
+        // element.style.backgroundColor = 'red';
+      
 
-#trimmer{
-    position: absolute;
-    height: 5px;
-    width: 70px;
-    background-color: #0000;
-    z-index: 5;
-    /* transform: translate(); */
-}
+      // Apply translation effect on collision
+      element.style.transform = 'translate(0px, 100px)';
+    //   hairsToRemove.push(index); // Mark hair to be removed
+      hairs.splice(index, 1); // Remove hair from array
+      hairCount--;
+      currentScore++;
+      
+      // Remove hair after a timeout
+      setTimeout(() => {
+        removeHair(element);
+      }, 1000);
+    }
+  });
 
-#score{
-    position: absolute;
-    font-size: 40px;
-    left: 10px;
-}
-
-#clipper{
-    background-color: rgba(00, 00, 00, 00);
-    width: 90px;
-    translate: -10px 0px;
-}
+function removeHair(hair) {
+  hair.remove();
+}}
